@@ -46,8 +46,11 @@ gem "omniauth-twitter"
 gem 'omniauth-github'
 gem 'omniauth-linkedin'
 
+# Third party apis
+gem 'rest_client'
+
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
