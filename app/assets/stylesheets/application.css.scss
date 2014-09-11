@@ -22,6 +22,16 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
+.clear:before,
+.clear:after {
+    content: " ";
+    display: table;
+}
+
+.clear:after {
+    clear: both;
+}
+
  $brand-primary: #428bca;
  $body-bg: #efefee;
  $text-color: #333332;
@@ -37,3 +47,25 @@
     color: #df4c47;
     color: #222;
  }
+
+ .touchy-menu-button{
+  display: table-cell;
+  width: 25%;
+  padding-top: 12px;
+  font-size: 20px;
+  font-weight: 600 !important;
+  background-color: #a71313;
+  color: #fff;
+  &:hover{
+    background-color: #48a3a6 !important;
+    color: black;
+  }
+}
+
+.touchy-logo{
+  width: 31%;
+  font-size: 24px;
+  font-weight: 800 !important;
+  background: #000;
+  color: #fff;
+}
