@@ -1,0 +1,52 @@
+
+development: &dev
+  facebook:
+    app_id: 586562608077019
+    app_secret: 967c9f275f71ee9b3fac7c687748806a
+    scope: "email, user_birthday, read_friendlists, read_insights, read_stream"
+    display: popup
+  github:
+    app_id: 8537e7ffc2b11c0950d0
+    app_secret: c766ef8db05bf4d8f1326a3ca6f39e444687e3aa
+    scope: "user,notification,repo,gist"
+  linkedin:
+    app_id: 759uzdf1vr6uas
+    app_secret: QPwXjrRYJXxvW8Md
+    scope: "r_fullprofile,r_emailaddress"
+  twitter:
+    app_id: 5h3riJ05cYGx5ikzHwZefw
+    app_secret: Dpdnc7LB8j3DsUkBi1kXNOb419fg5yqjWmHuIieU8
+    scope:
+  foursquare:
+    app_id: 0ISS3GQT25HNVVAXCKCARVTCUPDM2CRGEARY3SU3RKTOTEES
+    app_secret: 0KS4AA5FBHGAFH41D2OPTNDGZYWRZZFX5T4FWYOCOUE2XX4R
+
+
+test:
+  <<: *dev
+
+# no need to specify ?
+# :redirect_uri => "http://milaap.org/auth/facebook/callback",
+# and :options => {:scope => 'email,user_location'}
+production:
+  facebook:
+    app_id: fbapp_id
+    app_secret: fbapp_secret
+  github:
+    app_id: gitapp_id
+    app_secret: gitapp_secret
+  linkedin:
+    app_id: a33978c7942338dba162
+    app_secret: 90493c61684f7171c1adb4fe48052302b226f795
+
+staging: &stg
+  facebook:
+    app_id: fbapp_id
+    app_secret: fbapp_secret
+  github:
+    app_id: gitapp_id
+    app_secret: gitapp_secret
+  linkedin:
+    app_id: a33978c7942338dba162
+    app_secret: 90493c61684f7171c1adb4fe48052302b226f795
+

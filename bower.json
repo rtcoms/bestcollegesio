@@ -1,0 +1,23 @@
+{
+  "name": "bestcollegesio",
+  "version": "0.0.0",
+  "authors": [
+    "Rohit Trivedi <86.rohit@gmail.com>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "marka": "0.3.1" 
+  }
+}
