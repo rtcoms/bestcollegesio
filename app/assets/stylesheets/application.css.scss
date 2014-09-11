@@ -21,3 +21,19 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+ $brand-primary: #428bca;
+ $body-bg: #efefee;
+ $text-color: #333332;
+
+ html{
+ }
+
+ body{
+  /*background-image: image-url("bg.jpg");*/
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400 !important;
+  background-color: #d6e7f6;
+    color: #df4c47;
+    color: #222;
+ }
