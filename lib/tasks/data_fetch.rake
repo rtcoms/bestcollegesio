@@ -35,7 +35,7 @@ namespace :data_fetch do
 
       #6077
 
-      page = Nokogiri::HTML(open("http://www.4icu.org/reviews/1978.htm"))
+      page = Nokogiri::HTML(open("http://www.4icu.org/reviews/6077.htm"))
       page.encoding = 'UTF-8'
 
       college_info = {}
@@ -134,12 +134,11 @@ namespace :data_fetch do
 
       puts "fetching ADMINSSION INFO"
       college_info[:admission_info] = {}
-      info_div = page.css(".section")[14].css("div")
-
-      (0..4).to_a.each do |n|
-        reference_element =  info_div.css("h4")[n]
+      info_elements = page.css(".section")[14].css("h4")
+      info_elements.to_a.each do |e|
+        reference_element =  e
         value_element = reference_element.next_element
-        info_column_name =  info_div.css("h4")[n].text
+        info_column_name =  e.text
         info_column_value =   if value_element.name == "h5"
                                 value_element.text.strip
                               else
@@ -154,11 +153,11 @@ namespace :data_fetch do
 
       puts "fetching size and profile INFO"
       college_info[:size_info] = {}
-      info_div = page.css(".section")[17]
-      (0..6).to_a.each do |n|
-        reference_element =  info_div.css("h4")[n]
+      info_elements = page.css(".section")[17].css("h4")
+      info_elements.to_a.each do |e|
+        reference_element =  e
         value_element = reference_element.next_element
-        info_column_name =  info_div.css("h4")[n].text
+        info_column_name =  e.text
         info_column_value =   if value_element.name == "h5"
                                 value_element.text.strip
                               else
