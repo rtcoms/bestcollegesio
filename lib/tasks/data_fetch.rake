@@ -220,6 +220,26 @@ namespace :data_fetch do
       college_info[:affiliation_info] = info_column_value
       puts "fetched affiliation and membership info"
 
+      college_info[:social_links] = {}
+      puts "fetching social links info"
+      info_elements = page.css(".section")[28].css("h4")
+      info_elements.to_a.each do |e|
+        reference_element =  e
+        value_element = reference_element.next_element
+        info_column_name =  e.text
+        info_column_value =   if value_element.name == "h5"
+                                value_element.text.strip
+                              elsif value_element.name == "a"
+                                value_element.attr('href').to_s
+                              elsif value_element.name == "ul"
+                                value_element.css("li").map{|x| x.text.strip}.join(",")
+                              else
+                                value_element.css("img").attr('src').to_s.match("1.gif").present?
+                              end
+        college_info[:social_links][info_column_name] = info_column_value
+      end
+      puts "fetched social links info"
+
 
       puts college_info
   end
