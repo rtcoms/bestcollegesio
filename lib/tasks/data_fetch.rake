@@ -9,12 +9,12 @@ namespace :data_fetch do
 
       COURSE_PROVIDED ={
         "0" => "All Courses",
-        "1" => "Arts & Humanities",
-        "2" => "Business & Social Sciences",
-        "3" => "Language & Cultural",
-        "4" => "Medicine & Health",
-        "5" => "Engineering",
-        "6" => "Science & Technology"
+        "2" => "Arts & Humanities",
+        "3" => "Business & Social Sciences",
+        "4" => "Language & Cultural",
+        "5" => "Medicine & Health",
+        "6" => "Engineering",
+        "7" => "Science & Technology"
       }
       #USING MECHANIZE
       # agent = Mechanize.new
@@ -103,7 +103,7 @@ namespace :data_fetch do
       college_info[:courses_info] = {}
       puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
       page.css("table")[6].css("tr").each_with_index do |x, index|
-        next if index < 3
+        next if index < 3 || index == 4
          details_index = index - 3
          x.css("td").map{|x|
           (x.css("img").attr('src').to_s.match("1.gif") || x.css("img").attr('src').to_s.match("1b.gif")).present? if !x.css("img").blank?
@@ -113,6 +113,23 @@ namespace :data_fetch do
       end
 
       puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
+
+      puts "TUTION INFO FETCHING"
+      college_info[:tution_info] = {}
+      page.css("table")[7].css("tr").each_with_index do |x, index|
+        next if index == 0 || index == 3
+        tds = x.css("td")
+        puts tds.count
+        info_column_name_text =  tds[0].css("h5").text.strip
+        ug_fees = tds[1].css("h6").text.strip
+        pg_fees = tds[2].css("h6").text.strip
+
+        college_info[:tution_info][info_column_name_text] = {
+          :ug_fees => ug_fees,
+          :pg_fees => pg_fees
+        }
+      end
+      puts "TUTION INFO FETCHED"
 
 
 
