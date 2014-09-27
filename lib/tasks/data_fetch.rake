@@ -188,7 +188,37 @@ namespace :data_fetch do
       puts "fetched facilities and services"
 
 
+      college_info[:accreditation_info] = {}
+      puts "fetching accreditation info"
+      info_elements = page.css(".section")[22].css("h4")
+      info_elements.to_a.each do |e|
+        reference_element =  e
+        value_element = reference_element.next_element
+        info_column_name =  e.text
+        info_column_value =   if value_element.name == "h5"
+                                value_element.text.strip
+                              elsif value_element.name == "ul"
+                                value_element.css("li").map{|x| x.text.strip}.join(",")
+                              else
+                                value_element.css("img").attr('src').to_s.match("1.gif").present?
+                              end
+        college_info[:accreditation_info][info_column_name] = info_column_value
+      end
+      puts "fetched accreditation info"
 
+
+      college_info[:structure_info] = {}
+      puts "fetching academic structure info"
+      info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+      college_info[:structure_info] = info_column_value
+      puts "fetched academic structure info"
+
+
+      college_info[:affiliation_info] = {}
+      puts "fetching affiliation and membership info info"
+      info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+      college_info[:affiliation_info] = info_column_value
+      puts "fetched affiliation and membership info"
 
 
       puts college_info
