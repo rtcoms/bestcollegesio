@@ -33,6 +33,8 @@ namespace :data_fetch do
       # puts page.css("a")[13]["href"]
       # puts page.css("a")[14].text
 
+      #6077
+
       page = Nokogiri::HTML(open("http://www.4icu.org/reviews/1978.htm"))
       page.encoding = 'UTF-8'
 
@@ -119,7 +121,6 @@ namespace :data_fetch do
       page.css("table")[7].css("tr").each_with_index do |x, index|
         next if index == 0 || index == 3
         tds = x.css("td")
-        puts tds.count
         info_column_name_text =  tds[0].css("h5").text.strip
         ug_fees = tds[1].css("h6").text.strip
         pg_fees = tds[2].css("h6").text.strip
@@ -130,6 +131,24 @@ namespace :data_fetch do
         }
       end
       puts "TUTION INFO FETCHED"
+
+      puts "fetching ADMINSSION INFO"
+      college_info[:admission_info] = {}
+      info_div = page.css(".section")[14].css("div")
+
+      (0..4).to_a.each do |n|
+        reference_element =  info_div.css("h4")[n]
+        value_element = reference_element.next_element
+        info_column_name =  info_div.css("h4")[n].text
+        puts "#{info_column_name}"
+        info_column_value =   if value_element.name == "h5"
+                                value_element.text.strip
+                              else
+                                value_element.css("img").attr('src').to_s.match("1.gif").present?
+                              end
+        college_info[:admission_info][info_column_name] = info_column_value
+      end
+
 
 
 
