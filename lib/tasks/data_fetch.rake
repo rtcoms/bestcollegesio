@@ -6,6 +6,16 @@ namespace :data_fetch do
   desc "Fetching college data from internet"
   task :from_4icu, [:user_id] => [:environment] do |t, args|
       puts "THIS IS SPARTA"
+
+      COURSE_PROVIDED ={
+        "0" => "All Courses",
+        "1" => "Arts & Humanities",
+        "2" => "Business & Social Sciences",
+        "3" => "Language & Cultural",
+        "4" => "Medicine & Health",
+        "5" => "Engineering",
+        "6" => "Science & Technology"
+      }
       #USING MECHANIZE
       # agent = Mechanize.new
       # agent.user_agent = 'Individueller User-Agent'
@@ -89,6 +99,24 @@ namespace :data_fetch do
       end
       puts "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
       #puts page.css("table")[6].css("tr")
+
+      college_info[:courses_info] = {}
+      puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
+      page.css("table")[6].css("tr").each_with_index do |x, index|
+        next if index < 3
+         details_index = index - 3
+         x.css("td").map{|x|
+          (x.css("img").attr('src').to_s.match("1.gif") || x.css("img").attr('src').to_s.match("1b.gif")).present? if !x.css("img").blank?
+         }.compact.flatten.each_slice(5).with_index do |*details, i|
+          college_info[:courses_info][COURSE_PROVIDED[details_index.to_s]] = details
+         end
+      end
+
+      puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
+
+
+
+
       puts college_info
   end
 
