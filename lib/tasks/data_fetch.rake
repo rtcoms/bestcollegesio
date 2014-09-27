@@ -140,7 +140,6 @@ namespace :data_fetch do
         reference_element =  info_div.css("h4")[n]
         value_element = reference_element.next_element
         info_column_name =  info_div.css("h4")[n].text
-        puts "#{info_column_name}"
         info_column_value =   if value_element.name == "h5"
                                 value_element.text.strip
                               else
@@ -148,6 +147,26 @@ namespace :data_fetch do
                               end
         college_info[:admission_info][info_column_name] = info_column_value
       end
+      puts "fetched ADMINSSION INFO"
+
+
+
+
+      puts "fetching size and profile INFO"
+      college_info[:size_info] = {}
+      info_div = page.css(".section")[17]
+      (0..6).to_a.each do |n|
+        reference_element =  info_div.css("h4")[n]
+        value_element = reference_element.next_element
+        info_column_name =  info_div.css("h4")[n].text
+        info_column_value =   if value_element.name == "h5"
+                                value_element.text.strip
+                              else
+                                value_element.css("img").attr('src').to_s.match("1.gif").present?
+                              end
+        college_info[:size_info][info_column_name] = info_column_value
+      end
+      puts "fetched size and profile INFO"
 
 
 
