@@ -171,6 +171,26 @@ namespace :data_fetch do
 
 
 
+      college_info[:amneties_info] = {}
+      puts "fetching facilities and services"
+      info_elements = page.css(".section")[19].css("h4")
+      info_elements.to_a.each do |e|
+        reference_element =  e
+        value_element = reference_element.next_element
+        info_column_name =  e.text
+        info_column_value =   if value_element.name == "h5"
+                                value_element.text.strip
+                              else
+                                value_element.css("img").attr('src').to_s.match("1.gif").present?
+                              end
+        college_info[:amneties_info][info_column_name] = info_column_value
+      end
+
+      puts "fetched facilities and services"
+
+
+
+
 
       puts college_info
   end
