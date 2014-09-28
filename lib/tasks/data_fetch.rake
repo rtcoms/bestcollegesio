@@ -244,24 +244,8 @@ namespace :data_fetch do
       puts college_info
 
 
-
-
-
-
-      #STRUCTURING AREAS OF STUDY
-      #in database store like
-      # Arts - Literature
-      # Humanities - Philosophy
-      # SocialScience - Sociology
-      ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = [
-
-
-
-
-      ]
-
       ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = {
-        "name" => "Arts / Humanities / Social Science"
+        "name" => "Arts / Humanities / Social Science",
         "fields" => {
           "Arts" => [
                       "Visula Arts",
@@ -324,7 +308,7 @@ namespace :data_fetch do
       }
 
       JOURNALISM_COMMUNICATION_AND_MASS_MEDIA_STUDIES = {
-        "name" => "Journalism / Communication Studies / Mass Media Studies"
+        "name" => "Journalism / Communication Studies / Mass Media Studies",
         "fields" => {
           "Journalism" => [ "Literary journalism",
                             "Print journalism",
@@ -358,23 +342,23 @@ namespace :data_fetch do
       }
 
       EDUCATION = {
-        "name" => "Education"
+        "name" => "Education",
         "fields" => [
-                      "Alternative education"
-                      "Elementary education"
-                      "Secondary education"
-                      "Higher education"
-                      "Mastery learning"
-                      "Cooperative learning"
-                      "Agricultural education"
-                      "Art education"
-                      "Bilingual education"
-                      "Chemistry education"
-                      "Counselor education"
-                      "Language education"
-                      "Legal education"
-                      "Mathematics education"
-                      "Medical education"
+                      "Alternative education",
+                      "Elementary education",
+                      "Secondary education",
+                      "Higher education",
+                      "Mastery learning",
+                      "Cooperative learning",
+                      "Agricultural education",
+                      "Art education",
+                      "Bilingual education",
+                      "Chemistry education",
+                      "Counselor education",
+                      "Language education",
+                      "Legal education",
+                      "Mathematics education",
+                      "Medical education",
                       "Military education and training",
                       "Music education",
                       "Nursing education",
@@ -388,20 +372,20 @@ namespace :data_fetch do
                       "Sex education",
                       "Sociology of education",
                       "Technology education",
-                      "Vocational education".
+                      "Vocational education",
                       "General",
                       "Others"
                     ]
       }
 
       LAW = {
-        "name" => "Law"
+        "name" => "Law",
         "fields" => [
         ]
       }
 
       SCIENCE_AND_MATHEMATICS = {
-        "name" => "Science / Mathematics"
+        "name" => "Science / Mathematics",
         "fields" => {
           "Science" => ["General",
                         "Biology",
@@ -420,50 +404,50 @@ namespace :data_fetch do
       }
 
       ENGINEERING = {
-        "name" => "Engineering"
+        "name" => "Engineering",
         "fields" => [
-                      "Applied engineering"
-                      "Architectural engineering"
-                      "Audio engineering"
-                      "Biological engineering"
-                      "Broadcast engineering"
-                      "Building engineering"
-                      "Building services engineering"
-                      "Ceramics engineering"
-                      "Chemical engineering"
-                      "Computer engineering"
-                      "Computer Science and Engineering"
-                      "Civil engineering"
-                      "Electrical engineering"
-                      "Electronics engineering"
-                      "Engineering Science"
-                      "Environmental engineering"
-                      "Fire protection engineering"
-                      "Food engineering"
-                      "Glass engineering"
-                      "Industrial engineering (includes manufacturing and production engineering)"
-                      "Marine engineering"
-                      "Materials engineering"
-                      "Mechanical engineering"
-                      "Mechatronic engineering"
-                      "Military engineering"
-                      "Nuclear engineering"
-                      "Instrumentation engineering"
-                      "Offshore engineering"
-                      "Optical engineering"
-                      "Petroleum engineering"
-                      "Planetary engineering / Geoengineering"
-                      "Safety engineering"
-                      "Software engineering"
-                      "Sports engineering"
-                      "Systems engineering"
+                      "Applied engineering",
+                      "Architectural engineering",
+                      "Audio engineering",
+                      "Biological engineering",
+                      "Broadcast engineering",
+                      "Building engineering",
+                      "Building services engineering",
+                      "Ceramics engineering",
+                      "Chemical engineering",
+                      "Computer engineering",
+                      "Computer Science and Engineering",
+                      "Civil engineering",
+                      "Electrical engineering",
+                      "Electronics engineering",
+                      "Engineering Science",
+                      "Environmental engineering",
+                      "Fire protection engineering",
+                      "Food engineering",
+                      "Glass engineering",
+                      "Industrial engineering (includes manufacturing and production engineering)",
+                      "Marine engineering",
+                      "Materials engineering",
+                      "Mechanical engineering",
+                      "Mechatronic engineering",
+                      "Military engineering",
+                      "Nuclear engineering",
+                      "Instrumentation engineering",
+                      "Offshore engineering",
+                      "Optical engineering",
+                      "Petroleum engineering",
+                      "Planetary engineering / Geoengineering",
+                      "Safety engineering",
+                      "Software engineering",
+                      "Sports engineering",
+                      "Systems engineering",
                       "Textile engineering",
                       "Others"
                     ]
       }
 
       MEDICAL_AND_PHRMECY = {
-        "name" => "Medical / Pharmacy"
+        "name" => "Medical / Pharmacy",
         "fields" => [
                       "Homeopathic",
                       "Ayurvedic",
@@ -505,7 +489,7 @@ namespace :data_fetch do
       }
 
       OTHERS = {
-        "name" => "Others"
+        "name" => "Others",
         "fields" => [
                       "Agriculture",
                       "Architecture and design",
