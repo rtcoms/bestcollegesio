@@ -242,6 +242,235 @@ namespace :data_fetch do
 
 
       puts college_info
+
+
+
+
+
+
+      #STRUCTURING AREAS OF STUDY
+      #in database store like
+      # Arts - Literature
+      # Humanities - Philosophy
+      # SocialScience - Sociology
+      ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = [
+        "History",
+        "Linguistics",
+        "Literature",
+        "Visula Arts",
+        "Applied Arts",
+        "Performing arts/ Fine Arts",
+        "Philosophy",
+        "Religion and Theology",
+        "Anthropology / Archaeology",
+        "Area studies",
+        "Cultural and ethnic studies",
+        "Economics",
+        "Gender and sexuality studies",
+        "Geography",
+        "Political and International science",
+        "Sociology / Psychology",
+        "Physical Education/ Sports Science",
+        "Social Work",
+        "Social Policy/ Public Administration",
+        "Library and Information Science",
+        "Social Work",
+        "Others"
+      ]
+
+      #in database store like
+      #Business -
+      #commerce -
+      #management -
+
+      BUSINESS_COMMERCE_MANAGEMENT = [
+        "Tourism / Hospitality",
+        "Business administration",
+        "Accounting / Finance",
+        "Human resources",
+        "Marketing",
+        "Information systems",
+        "International trade",
+        "Information Technology",
+        "Legal Studies",
+        "Operation Management",
+        "Project Management",
+        "Supply Chain",
+        "Commerce",
+        "Others"
+      ]
+
+      JOURNALISM_COMMUNICATION_AND_MASS_MEDIA_STUDIES = [
+        #journalism
+        "Literary journalism",
+        "Print journalism",
+        "Sports journalism / sportscasting",
+        #mass media studies
+        "Newspaper",
+        "Magazine",
+        "Radio",
+        "Television",
+        "Internet",
+        #communication studies
+        "Advertising",
+        "Communication design",
+        "Environmental communication",
+        "Information theory",
+        "Intercultural communication",
+        "Marketing",
+        "Mass communication",
+        "Nonverbal communication",
+        "Organizational communication",
+        "Propaganda",
+        "Public relations",
+        "Speech communication",
+        "Technical writing",
+        "Translation"
+
+
+      ]
+
+      EDUCATION = [
+        "Alternative education"
+        "Elementary education"
+        "Secondary education"
+        "Higher education"
+        "Mastery learning"
+        "Cooperative learning"
+        "Agricultural education"
+        "Art education"
+        "Bilingual education"
+        "Chemistry education"
+        "Counselor education"
+        "Language education"
+        "Legal education"
+        "Mathematics education"
+        "Medical education"
+        "Military education and training",
+        "Music education",
+        "Nursing education",
+        "Peace education",
+        "Physical education/Sports coaching",
+        "Physics education",
+        "Reading education",
+        "Religious education",
+        "Science education",
+        "Special education",
+        "Sex education",
+        "Sociology of education",
+        "Technology education",
+        "Vocational education"
+      ]
+
+      LAW = [
+        "Canon law",
+        "Comparative law",
+        "Constitutional law",
+        "Competition law",
+        "Criminal law",
+        "Islamic law",
+        "Jewish law",
+        "Jurisprudence",
+        "Civil law",
+        "Human Rights Law"
+        "Others"
+      ]
+
+      SCIENCE_AND_MATHEMATICS = [
+        "Biology",
+        "Chemistry",
+        "Earth sciences",
+        "Physics",
+        "Space sciences",
+        "Mathematics",
+        "Computer sciences",
+        "Logic",
+        "Statistics",
+        "Systems science"
+      ]
+
+      ENGINEERING = [
+      "Applied engineering"
+      "Architectural engineering"
+      "Audio engineering"
+      "Biological engineering"
+      "Broadcast engineering"
+      "Building engineering"
+      "Building services engineering"
+      "Ceramics engineering"
+      "Chemical engineering"
+      "Computer engineering"
+      "Computer Science and Engineering"
+      "Civil engineering"
+      "Electrical engineering"
+      "Electronics engineering"
+      "Engineering Science"
+      "Environmental engineering"
+      "Fire protection engineering"
+      "Food engineering"
+      "Glass engineering"
+      "Industrial engineering (includes manufacturing and production engineering)"
+      "Marine engineering"
+      "Materials engineering"
+      "Mechanical engineering"
+      "Mechatronic engineering"
+      "Military engineering"
+      "Nuclear engineering"
+      "Instrumentation engineering"
+      "Offshore engineering"
+      "Optical engineering"
+      "Petroleum engineering"
+      "Planetary engineering / Geoengineering"
+      "Safety engineering"
+      "Software engineering"
+      "Sports engineering"
+      "Systems engineering"
+      "Textile engineering"
+      ]
+
+      MEDICAL_PHRMECY_AND_HEALTHCARE = [
+        "Homeopathic",
+        "Ayurvedic",
+        "Allopathy"
+
+        #medicine/pharmecy
+        "Clinical laboratory sciences/Clinical pathology/Laboratory medicine",
+        "Clinical Physiology",
+        "Dentistry",
+        "Health informatics/Clinical informatics",
+        "Nursing",
+        "Midwifery-Obstetrics",
+        "Nutrition and dietetics",
+        "Optometry",
+        "Orthoptics",
+        "Physiotherapy",
+        "Occupational therapy",
+        "Speech and language pathology",
+        "Internal medicine",
+        "Pharmacy",
+        "Pharmaceutical sciences",
+        "Physical fitness",
+        "Podiatry",
+        "Primary care",
+        "Psychiatry",
+        "Psychology",
+        "Public health",
+        "Radiology",
+        "Recreation therapy",
+        "Rehabilitation medicine",
+        "Respiratory medicine",
+        "Respiratory therapy",
+        "Rheumatology",
+        "Sports medicine",
+        "Surgery",
+        "Urology",
+        "Veterinary medicine"
+      ]
+
+      COMPUTER_APPLICATION = [
+      ]
+
+
   end
 
 end
