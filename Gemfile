@@ -33,10 +33,56 @@ gem 'rails-html-sanitizer', '~> 1.0'
 gem 'mechanize'
 gem 'nokogiri'
 
+gem 'pg'
+
+#backup/dump/restore
+gem 'seed_dump'
+gem 'backup'
+
+#js related and frontend / form making easy
+gem 'gon'
+gem 'active_data'
+gem 'mutations'
+
+#search related
+gem 'keyword_search' #gmail style search
+gem 'ransack'
+gem 'searchkick'
+
+#SEO related
+gem 'meta-tags'
+
+#image-processing
+#image_optim
+#imgkit
+#carrierwave
+
+#Datetime related
+gem 'stamp'
+
+#configuration related
+gem 'app_config'
+
 #ui related
 gem 'susy'
 gem 'bootstrap-sass'
 gem 'bootstrap-sass-extras'
+gem 'nestive'
+gem 'kaminari'
+
+#monitoring/logging/analytics/optimization/efficiency/tracking
+gem 'peek'
+gem 'pghero'
+gem "lograge"
+gem 'logstasher'
+gem 'ahoy_matey'
+gem 'rubocop', require: false
+gem 'paper_trail'
+gem 'party_foul'
+
+
+#scheduling/background processing
+gem 'whenever'
 
 #authentications
 gem 'devise', git: 'https://github.com/plataformatec/devise.git', :branch => 'lm-rails-4-2'
@@ -56,6 +102,10 @@ gem 'unicorn'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'jazz_hands'
+  gem 'bullet'
+  gem 'tracer_bullet'
+  gem 'xray-rails'
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
