@@ -4,6 +4,7 @@ require 'nokogiri'
 
 namespace :data_fetch do
   desc "Fetching college data from internet"
+
   task :from_4icu, [:user_id] => [:environment] do |t, args|
       puts "THIS IS SPARTA"
 
@@ -35,12 +36,13 @@ namespace :data_fetch do
 
       #6077
 
-      page = Nokogiri::HTML(open("http://www.4icu.org/reviews/6077.htm"))
+      url = "http://www.4icu.org/reviews/6077.htm"
+      page = Nokogiri::HTML(open(url))
       page.encoding = 'UTF-8'
 
       college_info = {}
       college_info.compare_by_identity
-      puts "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+      puts "starting to fetch #{url}"
       #general info columns
       # university_name, name_in_english, acronym, website, email, year of establish, motto
       # motto in english, colours, mascot
@@ -53,26 +55,25 @@ namespace :data_fetch do
         info_column_name =  tds[0].css("h4").text.strip
         info_column_value =  tds[1].css("h5").text.strip
 
+        info_column_name = ["Year of establishment", "Year of Foundation", "Founded in"].include?(info_column_name)  ? "Established in" : info_column_name
+
         if college_info[:general_info][info_column_name].nil?
           college_info[:general_info][info_column_name] = info_column_value
         else
           info_column_name = info_column_name + '_alt'
+          info_column_name = ["Year of establishment", "Year of Foundation"].include?(info_column_name)  ? "Established in" : info_column_name
           college_info[:general_info][info_column_name] = info_column_value
         end
       end
-      puts "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
-      puts "\n"
 
-      puts  "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+
       #college website url
       web_url = page.css("table")[4].css("tr").css("td").css("a")[0]["href"]
       college_info[:web_info] = {
           "website_url" => web_url
         }
-      puts "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-      puts "\n"
 
-      puts "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+
       college_info[:location_info] = {}
       #location info columns
       # Address, town, town size, other towns, post code, state or provinance, country, phone,
@@ -99,11 +100,9 @@ namespace :data_fetch do
           college_info[:location_info][info_column_name_text] = info_column_value
         end
       end
-      puts "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-      #puts page.css("table")[6].css("tr")
+
 
       college_info[:courses_info] = {}
-      puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
       page.css("table")[6].css("tr").each_with_index do |x, index|
         next if index < 3 || index == 4
          details_index = index - 3
@@ -114,9 +113,7 @@ namespace :data_fetch do
          end
       end
 
-      puts "CACACACACACACACACACACACACACACACACACACACCACACACA"
 
-      puts "TUTION INFO FETCHING"
       college_info[:tution_info] = {}
       page.css("table")[7].css("tr").each_with_index do |x, index|
         next if index == 0 || index == 3
@@ -130,9 +127,8 @@ namespace :data_fetch do
           :pg_fees => pg_fees
         }
       end
-      puts "TUTION INFO FETCHED"
 
-      puts "fetching ADMINSSION INFO"
+
       college_info[:admission_info] = {}
       info_elements = page.css(".section")[14].css("h4")
       info_elements.to_a.each do |e|
@@ -146,12 +142,8 @@ namespace :data_fetch do
                               end
         college_info[:admission_info][info_column_name] = info_column_value
       end
-      puts "fetched ADMINSSION INFO"
 
 
-
-
-      puts "fetching size and profile INFO"
       college_info[:size_info] = {}
       info_elements = page.css(".section")[17].css("h4")
       info_elements.to_a.each do |e|
@@ -165,13 +157,12 @@ namespace :data_fetch do
                               end
         college_info[:size_info][info_column_name] = info_column_value
       end
-      puts "fetched size and profile INFO"
+
 
 
 
 
       college_info[:amneties_info] = {}
-      puts "fetching facilities and services"
       info_elements = page.css(".section")[19].css("h4")
       info_elements.to_a.each do |e|
         reference_element =  e
@@ -185,11 +176,10 @@ namespace :data_fetch do
         college_info[:amneties_info][info_column_name] = info_column_value
       end
 
-      puts "fetched facilities and services"
+
 
 
       college_info[:accreditation_info] = {}
-      puts "fetching accreditation info"
       info_elements = page.css(".section")[22].css("h4")
       info_elements.to_a.each do |e|
         reference_element =  e
@@ -204,24 +194,18 @@ namespace :data_fetch do
                               end
         college_info[:accreditation_info][info_column_name] = info_column_value
       end
-      puts "fetched accreditation info"
 
 
       college_info[:structure_info] = {}
-      puts "fetching academic structure info"
       info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
       college_info[:structure_info] = info_column_value
-      puts "fetched academic structure info"
 
 
       college_info[:affiliation_info] = {}
-      puts "fetching affiliation and membership info info"
       info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
       college_info[:affiliation_info] = info_column_value
-      puts "fetched affiliation and membership info"
 
       college_info[:social_links] = {}
-      puts "fetching social links info"
       info_elements = page.css(".section")[28].css("h4")
       info_elements.to_a.each do |e|
         reference_element =  e
@@ -238,13 +222,18 @@ namespace :data_fetch do
                               end
         college_info[:social_links][info_column_name] = info_column_value
       end
-      puts "fetched social links info"
 
 
       puts college_info
+      puts "----------END-----------"
 
 
-      ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = {
+
+
+
+  end
+
+  ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = {
         "name" => "Arts / Humanities / Social Science",
         "fields" => {
           "Arts" => [
@@ -507,8 +496,5 @@ namespace :data_fetch do
                       "Transportation"
                     ]
       }
-
-
-  end
 
 end
