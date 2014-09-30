@@ -52,10 +52,12 @@ gem 'searchkick'
 
 #SEO related
 gem 'meta-tags'
+gem 'sitemap_generator'
 
 #image-processing
 gem 'carrierwave'
-gem 'piet'
+gem "carrierwave_backgrounder"
+gem 'piet-binary' #for image optimization
 #image_optim
 #imgkit
 #carrierwave
