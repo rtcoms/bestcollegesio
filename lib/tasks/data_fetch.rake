@@ -34,7 +34,9 @@ namespace :data_fetch do
       # puts page.css("a")[13]["href"]
       # puts page.css("a")[14].text
 
-      #6077
+      #6077 -- cornell
+      #4803 - oxford
+      #1978 - acharya
       # (1..15140).each do |num|
       (6077..6077).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
