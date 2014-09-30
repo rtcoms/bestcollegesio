@@ -14,10 +14,19 @@
 ActiveRecord::Schema.define(version: 20140930050913) do
 
   create_table "api_responses", force: true do |t|
+<<<<<<< HEAD
     t.string   "url",        null: false
     t.text     "response",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+=======
+    t.string   "url",           null: false
+    t.text     "response"
+    t.text     "error_message"
+    t.boolean  "success"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+>>>>>>> api response table created
   end
 
   create_table "users", force: true do |t|
