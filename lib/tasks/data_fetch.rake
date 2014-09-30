@@ -141,7 +141,7 @@ namespace :data_fetch do
           info_column_value     =  tds[1].css("h5").map{|x| x.text.strip }
 
           if info_column_name_text.blank? && info_column_image.present?
-            info_column_name_text = "Phone" if info_column_image.to_s.match("phone")
+            info_column_name_text = "Phone" if info_column_image.to_s.match("phone") || info_column_image.to_s.match("telicon")
             info_column_name_text = "Fax" if info_column_image.to_s.match("fax")
           end
 
