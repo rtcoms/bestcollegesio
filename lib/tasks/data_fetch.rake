@@ -35,202 +35,209 @@ namespace :data_fetch do
       # puts page.css("a")[14].text
 
       #6077
-
-      url = "http://www.4icu.org/reviews/6077.htm"
-      page = Nokogiri::HTML(open(url))
-      page.encoding = 'UTF-8'
-
-      college_info = {}
-      college_info.compare_by_identity
-      puts "starting to fetch #{url}"
-      #general info columns
-      # university_name, name_in_english, acronym, website, email, year of establish, motto
-      # motto in english, colours, mascot
-      college_info[:general_info] = {}
-      #TABLE 4 element is GENERAL UNIVERSITY INFO
-      page.css("table")[4].css("tr").each do |x|
-        #event numbers is for key(field_name) -- odd number is value for field name
-        tds = x.css("td")
-
-        info_column_name =  tds[0].css("h4").text.strip
-        info_column_value =  tds[1].css("h5").text.strip
-
-        info_column_name = ["Year of establishment", "Year of Foundation", "Founded in"].include?(info_column_name)  ? "Established in" : info_column_name
-
-        if college_info[:general_info][info_column_name].nil?
-          college_info[:general_info][info_column_name] = info_column_value
-        else
-          info_column_name = info_column_name + '_alt'
-          info_column_name = ["Year of establishment", "Year of Foundation"].include?(info_column_name)  ? "Established in" : info_column_name
-          college_info[:general_info][info_column_name] = info_column_value
-        end
-      end
+      fetch_data_from_4icu
 
 
-      #college website url
-      web_url = page.css("table")[4].css("tr").css("td").css("a")[0]["href"]
-      college_info[:web_info] = {
-          "website_url" => web_url
-        }
 
 
-      college_info[:location_info] = {}
-      #location info columns
-      # Address, town, town size, other towns, post code, state or provinance, country, phone,
-      # fax
 
-      page.css("table")[5].css("tr").each do |x|
 
-        tds = x.css("td")
 
-        info_column_name_text =  tds[0].css("h4").text.strip
-        info_column_image     =  tds[0].css("img").attr('src') if !x.css("img").blank?
-        info_column_value     =  tds[1].css("h5").map{|x| x.text.strip }.join(",")
 
-        if info_column_name_text.blank? && info_column_image.present?
-          info_column_name_text = "Phone" if info_column_image.to_s.match("telephone")
-          info_column_name_text = "Fax" if info_column_image.to_s.match("telefax")
+
+  end
+
+  def fetch_data_from_4icu url = "http://www.4icu.org/reviews/6077.htm"
+        url = url
+        page = Nokogiri::HTML(open(url))
+        page.encoding = 'UTF-8'
+
+        college_info = {}
+        college_info.compare_by_identity
+        puts "starting to fetch #{url}"
+        #general info columns
+        # university_name, name_in_english, acronym, website, email, year of establish, motto
+        # motto in english, colours, mascot
+        college_info[:general_info] = {}
+        #TABLE 4 element is GENERAL UNIVERSITY INFO
+        page.css("table")[4].css("tr").each do |x|
+          #event numbers is for key(field_name) -- odd number is value for field name
+          tds = x.css("td")
+
+          info_column_name =  tds[0].css("h4").text.strip
+          info_column_value =  tds[1].css("h5").text.strip
+
+          info_column_name = ["Year of establishment", "Year of Foundation", "Founded in"].include?(info_column_name)  ? "Established in" : info_column_name
+
+          if college_info[:general_info][info_column_name].nil?
+            college_info[:general_info][info_column_name] = info_column_value
+          else
+            info_column_name = info_column_name + '_alt'
+            info_column_name = ["Year of establishment", "Year of Foundation"].include?(info_column_name)  ? "Established in" : info_column_name
+            college_info[:general_info][info_column_name] = info_column_value
+          end
         end
 
 
-        if college_info[:location_info][info_column_name_text].nil?
-          college_info[:location_info][info_column_name_text] = info_column_value
-        else
-          info_column_name_text = info_column_name_text + '_alt'
-          college_info[:location_info][info_column_name_text] = info_column_value
+        #college website url
+        web_url = page.css("table")[4].css("tr").css("td").css("a")[0]["href"]
+        college_info[:web_info] = {
+            "website_url" => web_url
+          }
+
+
+        college_info[:location_info] = {}
+        #location info columns
+        # Address, town, town size, other towns, post code, state or provinance, country, phone,
+        # fax
+
+        page.css("table")[5].css("tr").each do |x|
+
+          tds = x.css("td")
+
+          info_column_name_text =  tds[0].css("h4").text.strip
+          info_column_image     =  tds[0].css("img").attr('src') if !x.css("img").blank?
+          info_column_value     =  tds[1].css("h5").map{|x| x.text.strip }.join(",")
+
+          if info_column_name_text.blank? && info_column_image.present?
+            info_column_name_text = "Phone" if info_column_image.to_s.match("telephone")
+            info_column_name_text = "Fax" if info_column_image.to_s.match("telefax")
+          end
+
+
+          if college_info[:location_info][info_column_name_text].nil?
+            college_info[:location_info][info_column_name_text] = info_column_value
+          else
+            info_column_name_text = info_column_name_text + '_alt'
+            college_info[:location_info][info_column_name_text] = info_column_value
+          end
         end
-      end
 
 
-      college_info[:courses_info] = {}
-      page.css("table")[6].css("tr").each_with_index do |x, index|
-        next if index < 3 || index == 4
-         details_index = index - 3
-         x.css("td").map{|x|
-          (x.css("img").attr('src').to_s.match("1.gif") || x.css("img").attr('src').to_s.match("1b.gif")).present? if !x.css("img").blank?
-         }.compact.flatten.each_slice(5).with_index do |*details, i|
-          college_info[:courses_info][COURSE_PROVIDED[details_index.to_s]] = details
-         end
-      end
+        college_info[:courses_info] = {}
+        page.css("table")[6].css("tr").each_with_index do |x, index|
+          next if index < 3 || index == 4
+           details_index = index - 3
+           x.css("td").map{|x|
+            (x.css("img").attr('src').to_s.match("1.gif") || x.css("img").attr('src').to_s.match("1b.gif")).present? if !x.css("img").blank?
+           }.compact.flatten.each_slice(5).with_index do |*details, i|
+            college_info[:courses_info][COURSE_PROVIDED[details_index.to_s]] = details
+           end
+        end
 
 
-      college_info[:tution_info] = {}
-      page.css("table")[7].css("tr").each_with_index do |x, index|
-        next if index == 0 || index == 3
-        tds = x.css("td")
-        info_column_name_text =  tds[0].css("h5").text.strip
-        ug_fees = tds[1].css("h6").text.strip
-        pg_fees = tds[2].css("h6").text.strip
+        college_info[:tution_info] = {}
+        page.css("table")[7].css("tr").each_with_index do |x, index|
+          next if index == 0 || index == 3
+          tds = x.css("td")
+          info_column_name_text =  tds[0].css("h5").text.strip
+          ug_fees = tds[1].css("h6").text.strip
+          pg_fees = tds[2].css("h6").text.strip
 
-        college_info[:tution_info][info_column_name_text] = {
-          :ug_fees => ug_fees,
-          :pg_fees => pg_fees
-        }
-      end
-
-
-      college_info[:admission_info] = {}
-      info_elements = page.css(".section")[14].css("h4")
-      info_elements.to_a.each do |e|
-        reference_element =  e
-        value_element = reference_element.next_element
-        info_column_name =  e.text
-        info_column_value =   if value_element.name == "h5"
-                                value_element.text.strip
-                              else
-                                value_element.css("img").attr('src').to_s.match("1.gif").present?
-                              end
-        college_info[:admission_info][info_column_name] = info_column_value
-      end
+          college_info[:tution_info][info_column_name_text] = {
+            :ug_fees => ug_fees,
+            :pg_fees => pg_fees
+          }
+        end
 
 
-      college_info[:size_info] = {}
-      info_elements = page.css(".section")[17].css("h4")
-      info_elements.to_a.each do |e|
-        reference_element =  e
-        value_element = reference_element.next_element
-        info_column_name =  e.text
-        info_column_value =   if value_element.name == "h5"
-                                value_element.text.strip
-                              else
-                                value_element.css("img").attr('src').to_s.match("1.gif").present?
-                              end
-        college_info[:size_info][info_column_name] = info_column_value
-      end
+        college_info[:admission_info] = {}
+        info_elements = page.css(".section")[14].css("h4")
+        info_elements.to_a.each do |e|
+          reference_element =  e
+          value_element = reference_element.next_element
+          info_column_name =  e.text
+          info_column_value =   if value_element.name == "h5"
+                                  value_element.text.strip
+                                else
+                                  value_element.css("img").attr('src').to_s.match("1.gif").present?
+                                end
+          college_info[:admission_info][info_column_name] = info_column_value
+        end
 
 
-
-
-
-      college_info[:amneties_info] = {}
-      info_elements = page.css(".section")[19].css("h4")
-      info_elements.to_a.each do |e|
-        reference_element =  e
-        value_element = reference_element.next_element
-        info_column_name =  e.text
-        info_column_value =   if value_element.name == "h5"
-                                value_element.text.strip
-                              else
-                                value_element.css("img").attr('src').to_s.match("1.gif").present?
-                              end
-        college_info[:amneties_info][info_column_name] = info_column_value
-      end
-
-
-
-
-      college_info[:accreditation_info] = {}
-      info_elements = page.css(".section")[22].css("h4")
-      info_elements.to_a.each do |e|
-        reference_element =  e
-        value_element = reference_element.next_element
-        info_column_name =  e.text
-        info_column_value =   if value_element.name == "h5"
-                                value_element.text.strip
-                              elsif value_element.name == "ul"
-                                value_element.css("li").map{|x| x.text.strip}.join(",")
-                              else
-                                value_element.css("img").attr('src').to_s.match("1.gif").present?
-                              end
-        college_info[:accreditation_info][info_column_name] = info_column_value
-      end
-
-
-      college_info[:structure_info] = {}
-      info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
-      college_info[:structure_info] = info_column_value
-
-
-      college_info[:affiliation_info] = {}
-      info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
-      college_info[:affiliation_info] = info_column_value
-
-      college_info[:social_links] = {}
-      info_elements = page.css(".section")[28].css("h4")
-      info_elements.to_a.each do |e|
-        reference_element =  e
-        value_element = reference_element.next_element
-        info_column_name =  e.text
-        info_column_value =   if value_element.name == "h5"
-                                value_element.text.strip
-                              elsif value_element.name == "a"
-                                value_element.attr('href').to_s
-                              elsif value_element.name == "ul"
-                                value_element.css("li").map{|x| x.text.strip}.join(",")
-                              else
-                                value_element.css("img").attr('src').to_s.match("1.gif").present?
-                              end
-        college_info[:social_links][info_column_name] = info_column_value
-      end
-
-
-      puts college_info
-      puts "----------END-----------"
+        college_info[:size_info] = {}
+        info_elements = page.css(".section")[17].css("h4")
+        info_elements.to_a.each do |e|
+          reference_element =  e
+          value_element = reference_element.next_element
+          info_column_name =  e.text
+          info_column_value =   if value_element.name == "h5"
+                                  value_element.text.strip
+                                else
+                                  value_element.css("img").attr('src').to_s.match("1.gif").present?
+                                end
+          college_info[:size_info][info_column_name] = info_column_value
+        end
 
 
 
 
 
+        college_info[:amneties_info] = {}
+        info_elements = page.css(".section")[19].css("h4")
+        info_elements.to_a.each do |e|
+          reference_element =  e
+          value_element = reference_element.next_element
+          info_column_name =  e.text
+          info_column_value =   if value_element.name == "h5"
+                                  value_element.text.strip
+                                else
+                                  value_element.css("img").attr('src').to_s.match("1.gif").present?
+                                end
+          college_info[:amneties_info][info_column_name] = info_column_value
+        end
+
+
+
+
+        college_info[:accreditation_info] = {}
+        info_elements = page.css(".section")[22].css("h4")
+        info_elements.to_a.each do |e|
+          reference_element =  e
+          value_element = reference_element.next_element
+          info_column_name =  e.text
+          info_column_value =   if value_element.name == "h5"
+                                  value_element.text.strip
+                                elsif value_element.name == "ul"
+                                  value_element.css("li").map{|x| x.text.strip}.join(",")
+                                else
+                                  value_element.css("img").attr('src').to_s.match("1.gif").present?
+                                end
+          college_info[:accreditation_info][info_column_name] = info_column_value
+        end
+
+
+        college_info[:structure_info] = {}
+        info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+        college_info[:structure_info] = info_column_value
+
+
+        college_info[:affiliation_info] = {}
+        info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+        college_info[:affiliation_info] = info_column_value
+
+        college_info[:social_links] = {}
+        info_elements = page.css(".section")[28].css("h4")
+        info_elements.to_a.each do |e|
+          reference_element =  e
+          value_element = reference_element.next_element
+          info_column_name =  e.text
+          info_column_value =   if value_element.name == "h5"
+                                  value_element.text.strip
+                                elsif value_element.name == "a"
+                                  value_element.attr('href').to_s
+                                elsif value_element.name == "ul"
+                                  value_element.css("li").map{|x| x.text.strip}.join(",")
+                                else
+                                  value_element.css("img").attr('src').to_s.match("1.gif").present?
+                                end
+          college_info[:social_links][info_column_name] = info_column_value
+        end
+
+
+        puts college_info
+        puts "----------END-----------"
   end
 
   ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = {
