@@ -36,7 +36,7 @@ namespace :data_fetch do
 
       #6077
       # (1..15140).each do |num|
-      (4803..4803).each do |num|
+      (6077..6077).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
         fetched_response = fetch_data_from_4icu url
@@ -114,7 +114,7 @@ namespace :data_fetch do
             college_info[:general_info][info_column_name] = info_column_value
           else
             info_column_name = info_column_name + '_alt'
-            info_column_name = ["Year of establishment", "Year of Foundation"].include?(info_column_name)  ? "Established in" : info_column_name
+            info_column_name = ["Year of establishment", "Year of Foundation", "Founded in"].include?(info_column_name)  ? "Established in" : info_column_name
             college_info[:general_info][info_column_name] = info_column_value
           end
         end
@@ -138,11 +138,11 @@ namespace :data_fetch do
 
           info_column_name_text =  tds[0].css("h4").text.strip
           info_column_image     =  tds[0].css("img").attr('src') if !x.css("img").blank?
-          info_column_value     =  tds[1].css("h5").map{|x| x.text.strip }.join(",")
+          info_column_value     =  tds[1].css("h5").map{|x| x.text.strip }
 
           if info_column_name_text.blank? && info_column_image.present?
-            info_column_name_text = "Phone" if info_column_image.to_s.match("telephone")
-            info_column_name_text = "Fax" if info_column_image.to_s.match("telefax")
+            info_column_name_text = "Phone" if info_column_image.to_s.match("phone")
+            info_column_name_text = "Fax" if info_column_image.to_s.match("fax")
           end
 
 
@@ -250,12 +250,12 @@ namespace :data_fetch do
 
 
         college_info[:structure_info] = {}
-        info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+        info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}
         college_info[:structure_info] = info_column_value
 
 
         college_info[:affiliation_info] = {}
-        info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}.join("|||")
+        info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}
         college_info[:affiliation_info] = info_column_value
 
         college_info[:social_links] = {}
@@ -275,7 +275,7 @@ namespace :data_fetch do
                                 end
           college_info[:social_links][info_column_name] = info_column_value
         end
-
+        ap college_info
         college_info
   end
 
