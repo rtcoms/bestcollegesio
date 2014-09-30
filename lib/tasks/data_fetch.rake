@@ -35,7 +35,33 @@ namespace :data_fetch do
       # puts page.css("a")[14].text
 
       #6077
-      fetch_data_from_4icu
+      # (1..15140).each do |num|
+      (15120..15140).each do |num|
+        url = "http://www.4icu.org/reviews/#{num}.htm"
+        puts "fetching url : #{url}"
+        fetched_response = fetch_data_from_4icu url
+        ar = ApiResponse.new
+        if fetched_response.is_a? String
+          puts "ERROR -- #{url}"
+          ar.url = url
+          ar.response = nil
+          ar.error_message = fetched_response
+          ar.success = false
+          ar.save!
+        end
+        if fetched_response.is_a? Hash
+          puts "SUCCESS -- #{url}"
+          ar.url = url
+          ar.response = fetched_response.to_json
+          ar.error_message = nil
+          ar.success = true
+          ar.save!
+        end
+
+        puts "#{ar.url} fetch was #{ar.success ? 'successful' : 'failure'}"
+      end
+
+
 
 
 
@@ -47,10 +73,15 @@ namespace :data_fetch do
 
   end
 
-  def fetch_data_from_4icu url = "http://www.4icu.org/reviews/6077.htm"
+  def fetch_data_from_4icu url = "http://www.4icu.org/reviews/22000.htm"
         url = url
-        page = Nokogiri::HTML(open(url))
-        page.encoding = 'UTF-8'
+        begin
+          page = Nokogiri::HTML(open(url))
+          page.encoding = 'UTF-8'
+        rescue Exception => e
+          return nil if e.message == "404 Not Found"
+          return e.message
+        end
 
         college_info = {}
         college_info.compare_by_identity
@@ -235,9 +266,7 @@ namespace :data_fetch do
           college_info[:social_links][info_column_name] = info_column_value
         end
 
-
-        puts college_info
-        puts "----------END-----------"
+        college_info
   end
 
   ART_AND_HUMANITIES_AND_SOCIAL_SCIENCE = {
