@@ -32,6 +32,8 @@ gem 'rails-html-sanitizer', '~> 1.0'
 ###########################PROJECT SPECIFIC
 gem 'mechanize'
 gem 'nokogiri'
+gem 'wikipedia-client'
+gem 'wiki-api', git: "git://github.com/dblommesteijn/wiki-api.git"
 
 gem 'pg'
 
