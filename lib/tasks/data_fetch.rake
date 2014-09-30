@@ -238,10 +238,10 @@ namespace :data_fetch do
           reference_element =  e
           value_element = reference_element.next_element
           info_column_name =  e.text
-          info_column_value =   if value_element.name == "h5"
+          info_column_value =   if value_element.children.first.name == "text" || value_element.children.first.name == "a"
                                   value_element.text.strip
-                                elsif value_element.name == "ul"
-                                  value_element.css("li").map{|x| x.text.strip}.join(",")
+                                elsif value_element.children.first.name == "ul"
+                                  value_element.css("li").map{|x| x.text.strip}
                                 else
                                   value_element.css("img").attr('src').to_s.match("1.gif").present?
                                 end
