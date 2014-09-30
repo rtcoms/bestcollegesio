@@ -33,7 +33,6 @@ gem 'rails-html-sanitizer', '~> 1.0'
 gem 'mechanize'
 gem 'nokogiri'
 gem 'wikipedia-client'
-gem 'wiki-api', git: "git://github.com/dblommesteijn/wiki-api.git"
 
 gem 'pg'
 
@@ -55,6 +54,8 @@ gem 'searchkick'
 gem 'meta-tags'
 
 #image-processing
+gem 'carrierwave'
+gem 'piet'
 #image_optim
 #imgkit
 #carrierwave

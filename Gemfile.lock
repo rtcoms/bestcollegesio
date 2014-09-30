@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/dblommesteijn/wiki-api.git
-  revision: 18c5c6d9c574e31fffe76f2d139917bb6a7c1456
-  specs:
-    wiki-api (0.1.0)
-      json (> 1.6.1)
-      nokogiri (> 1.5.0)
-
-GIT
   remote: https://github.com/plataformatec/devise.git
   revision: 8482e485d1396fdc43c030098f80c90f11763a3a
   branch: lm-rails-4-2
@@ -95,6 +87,11 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     chronic (0.10.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -258,6 +255,9 @@ GEM
     pg (0.17.1)
     pghero (0.1.5)
       activerecord
+    piet (0.2.0)
+      png_quantizator
+    png_quantizator (0.1.1)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     powerpack (0.0.9)
@@ -419,6 +419,7 @@ DEPENDENCIES
   bootstrap-sass-extras
   bullet
   byebug
+  carrierwave
   coffee-rails (~> 4.0.0)
   devise!
   gon
@@ -444,6 +445,7 @@ DEPENDENCIES
   peek
   pg
   pghero
+  piet
   rails (= 4.2.0.beta2)
   rails-html-sanitizer (~> 1.0)
   ransack
@@ -463,6 +465,5 @@ DEPENDENCIES
   unicorn
   web-console (~> 2.0.0.beta2)
   whenever
-  wiki-api!
   wikipedia-client
   xray-rails

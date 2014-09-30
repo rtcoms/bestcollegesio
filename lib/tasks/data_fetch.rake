@@ -36,7 +36,7 @@ namespace :data_fetch do
 
       #6077
       # (1..15140).each do |num|
-      (15120..15140).each do |num|
+      (4803..4803).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
         fetched_response = fetch_data_from_4icu url
@@ -61,6 +61,16 @@ namespace :data_fetch do
         puts "#{ar.url} fetch was #{ar.success ? 'successful' : 'failure'}"
       end
 
+
+      #NOW NEED TO FETCH CONTENT FROM WIKIPEDIA -- MAINLY FROM INFOBOX
+      #http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=University%20of%20Oxford&rvsection=0
+
+
+      #fetch images
+      require 'wikipedia'
+      page = Wikipedia.find( 'Getting Things Done' )
+      page.image_urls
+      page.coordinates
 
 
 
