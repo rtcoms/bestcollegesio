@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929115953) do
+ActiveRecord::Schema.define(version: 20140930050913) do
+
+  create_table "api_responses", force: true do |t|
+    t.string   "url",        null: false
+    t.text     "response",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

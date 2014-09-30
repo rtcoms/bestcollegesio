@@ -23,16 +23,30 @@ Things you may want to cover:
 
 * ...
 
-t.string :name
-      t.string :native_name
-      t.founded_in :number
+t.string   :name, null: false
+      t.string   :native_name, null:false
+      t.integer  :founded_in
+      t.string   :motto
+      t.string   :native_motto
+      t.string   :website_url
 
-      t.string :country
-      t.string :continent
-      t.text :address
+      t.text     :address
+      t.string   :phone_number
+      t.string   :fax_number
 
-      t.string :phone_number
-      t.string :fax_number
+      t.string   :country, null: false
+      t.string   :continent, null: false
+
+      t.string   :entity_type, null: false
+      t.string   :control_type, null: false
+
+      t.string   :student_enrollment_range
+      t.string   :academic_staff_range
+      t.string   :religious_affiliation
+      t.string   :campus_setting
+      t.boolean  :provides_scholarship
+      t.boolean  :exchange_program
+      t.boolean  :distance_learning
 
 
 Please feel free to use a different markup language if you do not plan to run
