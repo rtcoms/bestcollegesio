@@ -47,18 +47,21 @@ namespace :data_fetch do
           puts "ERROR -- #{url}"
           ar.url = url
           ar.response = nil
-          ar.error_message = fetched_response
+          ar.error_message = {
+            :status => "error",
+            :error_message => fetched_response
+            }
           ar.success = false
-          ar.save!
         end
         if fetched_response.is_a? Hash
+          fetched_response[:status] = "success"
           puts "SUCCESS -- #{url}"
           ar.url = url
           ar.response = fetched_response.to_json
           ar.error_message = nil
           ar.success = true
-          ar.save!
         end
+        ar.save!
 
         puts "#{ar.url} fetch was #{ar.success ? 'successful' : 'failure'}"
       end
