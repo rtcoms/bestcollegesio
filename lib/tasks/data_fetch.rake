@@ -38,7 +38,7 @@ namespace :data_fetch do
       #4803 - oxford
       #1978 - acharya
       # (422..15140).each do |num|
-      (543..15140).each do |num|
+      (1..15140).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
         fetched_response = fetch_data_from_4icu url
@@ -99,7 +99,6 @@ namespace :data_fetch do
           return e.message
         end
 
-        puts "======================="
         if  page.css("iframe").size == 0
           table_ref_no = 2
           section_ref_no = 13
@@ -109,7 +108,6 @@ namespace :data_fetch do
         else
           raise "FOUND MORE THAN ONE IFRAME"
         end
-        puts "======================="
 
         college_info = {}
         college_info.compare_by_identity
@@ -171,6 +169,8 @@ namespace :data_fetch do
             college_info[:location_info][info_column_name_text] = info_column_value
           end
         end
+        college_info[:location_info]["country"] = page.css("a")[6].text.strip
+        college_info[:location_info]["continent"] = page.css("a")[5].text.strip
 
 
         college_info[:courses_info] = {}
@@ -198,11 +198,6 @@ namespace :data_fetch do
             :pg_fees => pg_fees
           }
         end
-
-        puts "----------ADM INFO TEXT"
-        puts page.css(".section")[13].text
-        puts "------------------------"
-
 
         college_info[:admission_info] = {}
         info_elements = page.css(".section")[section_ref_no].css("h4")
