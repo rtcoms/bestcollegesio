@@ -42,6 +42,7 @@ namespace :data_fetch do
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
         fetched_response = fetch_data_from_4icu url
+        next if fetched_response.nil?
         ar = ApiResponse.new
         if fetched_response.is_a? String
           puts "ERROR -- #{url}"
