@@ -33,11 +33,11 @@ namespace :data_fetch do
       # puts page.css("a")[13].text
       # puts page.css("a")[13]["href"]
       # puts page.css("a")[14].text
-
+      #ERRORS FOR 208, 421, 506
       #6077 -- cornell
       #4803 - oxford
       #1978 - acharya
-      # (1..15140).each do |num|
+      # (422..15140).each do |num|
       (6077..6077).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
@@ -89,7 +89,7 @@ namespace :data_fetch do
 
   end
 
-  def fetch_data_from_4icu url = "http://www.4icu.org/reviews/22000.htm"
+  def fetch_data_from_4icu url = "http://www.4icu.org/reviews/6077.htm"
         url = url
         begin
           page = Nokogiri::HTML(open(url))
@@ -99,6 +99,18 @@ namespace :data_fetch do
           return e.message
         end
 
+        puts "======================="
+        if  page.css("iframe").size == 0
+          table_ref_no = 2
+          section_ref_no = 13
+        elsif page.css("iframe").size == 1
+          table_ref_no = 4
+          section_ref_no = 14
+        else
+          raise "FOUND MORE THAN ONE IFRAME"
+        end
+        puts "======================="
+
         college_info = {}
         college_info.compare_by_identity
         puts "starting to fetch #{url}"
@@ -107,7 +119,7 @@ namespace :data_fetch do
         # motto in english, colours, mascot
         college_info[:general_info] = {}
         #TABLE 4 element is GENERAL UNIVERSITY INFO
-        page.css("table")[4].css("tr").each do |x|
+        page.css("table")[table_ref_no].css("tr").each do |x|
           #event numbers is for key(field_name) -- odd number is value for field name
           tds = x.css("td")
 
@@ -127,7 +139,7 @@ namespace :data_fetch do
 
 
         #college website url
-        web_url = page.css("table")[4].css("tr").css("td").css("a")[0]["href"]
+        web_url = page.css("table")[table_ref_no].css("tr").css("td").css("a")[0]["href"]
         college_info[:web_info] = {
             "website_url" => web_url
           }
@@ -138,7 +150,7 @@ namespace :data_fetch do
         # Address, town, town size, other towns, post code, state or provinance, country, phone,
         # fax
 
-        page.css("table")[5].css("tr").each do |x|
+        page.css("table")[table_ref_no+1].css("tr").each do |x|
 
           tds = x.css("td")
 
@@ -162,7 +174,7 @@ namespace :data_fetch do
 
 
         college_info[:courses_info] = {}
-        page.css("table")[6].css("tr").each_with_index do |x, index|
+        page.css("table")[table_ref_no+2].css("tr").each_with_index do |x, index|
           next if index < 3 || index == 4
            details_index = index - 3
            x.css("td").map{|x|
@@ -174,7 +186,7 @@ namespace :data_fetch do
 
 
         college_info[:tution_info] = {}
-        page.css("table")[7].css("tr").each_with_index do |x, index|
+        page.css("table")[table_ref_no+3].css("tr").each_with_index do |x, index|
           next if index == 0 || index == 3
           tds = x.css("td")
           info_column_name_text =  tds[0].css("h5").text.strip
@@ -187,9 +199,13 @@ namespace :data_fetch do
           }
         end
 
+        puts "----------ADM INFO TEXT"
+        puts page.css(".section")[13].text
+        puts "------------------------"
+
 
         college_info[:admission_info] = {}
-        info_elements = page.css(".section")[14].css("h4")
+        info_elements = page.css(".section")[section_ref_no].css("h4")
         info_elements.to_a.each do |e|
           reference_element =  e
           value_element = reference_element.next_element
@@ -204,7 +220,7 @@ namespace :data_fetch do
 
 
         college_info[:size_info] = {}
-        info_elements = page.css(".section")[17].css("h4")
+        info_elements = page.css(".section")[section_ref_no+3].css("h4")
         info_elements.to_a.each do |e|
           reference_element =  e
           value_element = reference_element.next_element
@@ -222,7 +238,7 @@ namespace :data_fetch do
 
 
         college_info[:amneties_info] = {}
-        info_elements = page.css(".section")[19].css("h4")
+        info_elements = page.css(".section")[section_ref_no+5].css("h4")
         info_elements.to_a.each do |e|
           reference_element =  e
           value_element = reference_element.next_element
@@ -239,7 +255,7 @@ namespace :data_fetch do
 
 
         college_info[:accreditation_info] = {}
-        info_elements = page.css(".section")[22].css("h4")
+        info_elements = page.css(".section")[section_ref_no+8].css("h4")
         info_elements.to_a.each do |e|
           reference_element =  e
           value_element = reference_element.next_element
@@ -256,16 +272,16 @@ namespace :data_fetch do
 
 
         college_info[:structure_info] = {}
-        info_column_value = page.css(".section")[24].css("h5").css("ul").css("li").map{|x| x.text.strip}
+        info_column_value = page.css(".section")[section_ref_no+10].css("h5").css("ul").css("li").map{|x| x.text.strip}
         college_info[:structure_info] = info_column_value
 
 
         college_info[:affiliation_info] = {}
-        info_column_value = page.css(".section")[26].css("h5").css("ul").css("li").map{|x| x.text.strip}
+        info_column_value = page.css(".section")[section_ref_no+12].css("h5").css("ul").css("li").map{|x| x.text.strip}
         college_info[:affiliation_info] = info_column_value
 
         college_info[:social_links] = {}
-        info_elements = page.css(".section")[28].css("h4")
+        info_elements = page.css(".section")[section_ref_no+14].css("h4")
         info_elements.to_a.each do |e|
           reference_element =  e
           value_element = reference_element.next_element
