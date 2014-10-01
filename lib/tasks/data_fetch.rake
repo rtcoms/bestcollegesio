@@ -69,10 +69,10 @@ namespace :data_fetch do
 
 
       #fetch images
-      require 'wikipedia'
-      page = Wikipedia.find( 'Getting Things Done' )
-      page.image_urls
-      page.coordinates
+      # require 'wikipedia'
+      # page = Wikipedia.find( 'Getting Things Done' )
+      # page.image_urls
+      # page.coordinates
 
 
 
