@@ -38,7 +38,7 @@ namespace :data_fetch do
       #4803 - oxford
       #1978 - acharya
       # (422..15140).each do |num|
-      (6077..6077).each do |num|
+      (543..15140).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
         puts "fetching url : #{url}"
         fetched_response = fetch_data_from_4icu url
@@ -103,7 +103,7 @@ namespace :data_fetch do
         if  page.css("iframe").size == 0
           table_ref_no = 2
           section_ref_no = 13
-        elsif page.css("iframe").size == 1
+        elsif page.css("iframe").size >= 1
           table_ref_no = 4
           section_ref_no = 14
         else
