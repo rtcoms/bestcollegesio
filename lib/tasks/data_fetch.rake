@@ -37,6 +37,7 @@ namespace :data_fetch do
       #6077 -- cornell
       #4803 - oxford
       #1978 - acharya
+      #208 -- without ranking
       # (422..15140).each do |num|
       (1..15140).each do |num|
         url = "http://www.4icu.org/reviews/#{num}.htm"
