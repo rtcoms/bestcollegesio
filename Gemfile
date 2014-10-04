@@ -35,6 +35,8 @@ gem 'nokogiri'
 gem 'wikipedia-client'
 
 gem 'pg'
+# http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html
+gem 'ohm'
 
 #backup/dump/restore
 gem 'seed_dump'
@@ -111,6 +113,7 @@ group :development, :test do
   gem 'bullet'
   gem 'tracer_bullet'
   gem 'xray-rails'
+  gem 'rails-footnotes', '>= 4.0.0', '<5'
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
