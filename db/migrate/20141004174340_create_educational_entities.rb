@@ -84,7 +84,20 @@ class CreateEducationalEntities < ActiveRecord::Migration
                                           }
 
 
-      t.json    :amneties
+      t.json    :amneties, default: {
+                                      library:                true,
+                                      sports_facility:        true,
+                                      accomodation_hostel:    nil,
+                                      swimming_pool:          nil,
+                                      recreation_center:      nil,
+                                      gymnasium:              nil,
+                                      bank_and_atm:           nil,
+                                      courier_facility:       nil,
+                                      girls_hostel:           nil,
+                                      broadband_connectivity: nil,
+                                      medical_clinic:         nil
+
+                                    }
 
 
 
