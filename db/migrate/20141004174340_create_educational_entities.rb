@@ -1,5 +1,6 @@
 class CreateEducationalEntities < ActiveRecord::Migration
   def change
+    enable_extension :hstore
     create_table :educational_entities do |t|
 
       t.string   :name, null: false
