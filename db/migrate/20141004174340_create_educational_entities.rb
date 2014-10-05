@@ -13,6 +13,7 @@ class CreateEducationalEntities < ActiveRecord::Migration
       t.string   :colors
 
       # ADDRESS INFO
+      t.string   :street_or_area
       t.string   :town, null: false
       t.string   :zipcode
       t.string   :state_or_provinance
@@ -22,17 +23,17 @@ class CreateEducationalEntities < ActiveRecord::Migration
       # CONTACT INFO
       t.string   :phone_number
       t.string   :fax_number
-      t.json     :address, null: false
-      t.json     :admission_office_address
+      t.string   :address, null: false, array: true
+      t.string   :admission_office_address
 
       # PROFILE INFO
-      t.string   :entity_type, null: false   # profit or non profit
+      t.string   :profit_level, null: false   # profit or non profit
       t.string   :control_type, null: false  # public or private
       # degree college affiliated with a univ
       # polytechnic college# open university # Deemed university
       # university # autonomous institute
       # polytechnic college can also come under a university
-      t.string   :institute_type, null: false
+      t.string   :institute_level, null: false
       t.integer  :university_id
       t.string   :student_enrollment_range
       t.string   :faculty_staff_range
@@ -55,16 +56,17 @@ class CreateEducationalEntities < ActiveRecord::Migration
       # "5" => "Medicine & Health",
       # "6" => "Engineering",
       # "7" => "Science & Technology"
-      t.integer  :all_courses_info                    , array: true
-      t.integer  :art_humanities_courses_info         , array: true
-      t.integer  :business_social_science_courses_info, array: true
-      t.integer  :medicine_health_courses_info        , array: true
-      t.integer  :engineering_courses_info            , array: true
-      t.integer  :science_tech_courses_info           , array: true
+      t.boolean  :all_courses_info                    , array: true
+      t.boolean  :art_humanities_courses_info         , array: true
+      t.boolean  :business_social_science_courses_info, array: true
+      t.boolean  :language_and_cultural_courses_info  , array: true
+      t.boolean  :medicine_health_courses_info        , array: true
+      t.boolean  :engineering_courses_info            , array: true
+      t.boolean  :science_tech_courses_info           , array: true
 
       t.string   :structure_info, array: true
       t.string   :affiliations  , array: true
-      t.json :accreditation__info, default: {
+      t.json :accreditation_info, default: {
                                                 year_of_first_accreditation: "NA",
                                                 institutional_recognition: "NA"
 
@@ -80,6 +82,9 @@ class CreateEducationalEntities < ActiveRecord::Migration
                                               open_courseware:  "NA",
                                               wikipedia:        "NA"
                                           }
+
+
+      t.json    :amneties
 
 
 
