@@ -13,8 +13,8 @@ class CreateEducationalEntities < ActiveRecord::Migration
       t.string   :colors
 
       # ADDRESS INFO
-      t.string   :address, null: false
       t.string   :town, null: false
+      t.string   :zipcode
       t.string   :state_or_provinance
       t.string   :country, null: false
       t.string   :continent, null: false
@@ -22,39 +22,53 @@ class CreateEducationalEntities < ActiveRecord::Migration
       # CONTACT INFO
       t.string   :phone_number
       t.string   :fax_number
+      t.json     :address, null: false
+      t.json     :admission_office_address
 
       # PROFILE INFO
       t.string   :entity_type, null: false   # profit or non profit
       t.string   :control_type, null: false  # public or private
       # degree college affiliated with a univ
-      # polytechnic college
-      # open university
-      # Deemed university
-      # university
-      # autonomous institute
+      # polytechnic college# open university # Deemed university
+      # university # autonomous institute
+      # polytechnic college can also come under a university
+      t.string   :institute_type, null: false
+      t.integer  :university_id
+      t.string   :student_enrollment_range
+      t.string   :faculty_staff_range
+      t.string   :gender
+      t.boolean  :international_students
+      t.string   :selection_criteria
+      t.string   :selection_percentage
+      t.boolean  :financial_aid_or_scholership
+      t.boolean  :distance_or_online_course
+      t.string   :academic_calender_system
+      t.string   :religious_affiliation
+      t.json     :fees_info
 
-      #polytechnic college can also come under a university
-      t.string  :institute_type, null: false
-      t.string  :student_enrollment_range
-      t.string  :faculty_staff_range
-      t.integer :university_id
 
-      t.string  :gender
-      t.boolean :international_students
-      t.string  :selection_criteria
-      t.string  :selection_percentage
-      t.boolean :financial_aid_or_scholership
-      t.boolean :distance_or_online_course
-      t.string  :academic_calender_system
-      t.string  :religious_affiliation
-      t.string  :admission_office_address
+      # COURSES INFO
+      # "0" => "All Courses",
+      # "2" => "Arts & Humanities",
+      # "3" => "Business & Social Sciences",
+      # "4" => "Language & Cultural",
+      # "5" => "Medicine & Health",
+      # "6" => "Engineering",
+      # "7" => "Science & Technology"
+      t.integer  :all_courses_info                    , array: true
+      t.integer  :art_humanities_courses_info         , array: true
+      t.integer  :business_social_science_courses_info, array: true
+      t.integer  :medicine_health_courses_info        , array: true
+      t.integer  :engineering_courses_info            , array: true
+      t.integer  :science_tech_courses_info           , array: true
 
-      t.hstore  :fees_info,  :default => {
-                                            ug_local:         "Not Reported",
-                                            ug_international: "Not Reported",
-                                            pg_local:         "Not Reported",
-                                            pg_international: "Not Reported"
-                                          }
+      t.string   :structure_info, array: true
+      t.string   :affiliations  , array: true
+      t.json :accreditation__info, default: {
+                                                year_of_first_accreditation: "NA",
+                                                institutional_recognition: "NA"
+
+                                              }
 
       t.hstore  :social_links, :default => {
                                               facebook:         "NA",
@@ -66,13 +80,7 @@ class CreateEducationalEntities < ActiveRecord::Migration
                                               open_courseware:  "NA",
                                               wikipedia:        "NA"
                                           }
-      t.text   :structure_info
-      t.hstore :accreditation__info, default: {
-                                                year_of_first_accreditation: "NA",
-                                                institutional_recognition: "NA"
 
-                                              }
-      t.text   :affiliation_info
 
 
 

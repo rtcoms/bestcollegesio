@@ -23,12 +23,12 @@ test:
   <<: *default
   database: bcio_test
   encoding: unicode
-  username: milaap-webapp
+  username: rtcoms
   password:
 
 production:
   <<: *default
   database: bcio_production
   encoding: unicode
-  username: milaap-webapp
+  username: rtcoms
   password:

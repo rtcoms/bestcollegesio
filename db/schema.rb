@@ -27,27 +27,29 @@ ActiveRecord::Schema.define(version: 20141004174340) do
   end
 
   create_table "educational_entities", force: true do |t|
-    t.string   "name",                                                                                                                                                                                      null: false
+    t.string   "name",                                                                                                                                                                                              null: false
     t.string   "native_name"
     t.string   "acronym"
-    t.integer  "founded_in",                                                                                                                                                                                null: false
+    t.integer  "founded_in",                                                                                                                                                                                        null: false
     t.string   "motto"
     t.string   "native_motto"
-    t.string   "website_url",                                                                                                                                                                               null: false
+    t.string   "website_url",                                                                                                                                                                                       null: false
     t.string   "colors"
-    t.string   "address",                                                                                                                                                                                   null: false
-    t.string   "town",                                                                                                                                                                                      null: false
+    t.string   "town",                                                                                                                                                                                              null: false
+    t.string   "zipcode"
     t.string   "state_or_provinance"
-    t.string   "country",                                                                                                                                                                                   null: false
-    t.string   "continent",                                                                                                                                                                                 null: false
+    t.string   "country",                                                                                                                                                                                           null: false
+    t.string   "continent",                                                                                                                                                                                         null: false
     t.string   "phone_number"
     t.string   "fax_number"
-    t.string   "entity_type",                                                                                                                                                                               null: false
-    t.string   "control_type",                                                                                                                                                                              null: false
-    t.string   "institute_type",                                                                                                                                                                            null: false
+    t.json     "address",                                                                                                                                                                                           null: false
+    t.json     "admission_office_address"
+    t.string   "entity_type",                                                                                                                                                                                       null: false
+    t.string   "control_type",                                                                                                                                                                                      null: false
+    t.string   "institute_type",                                                                                                                                                                                    null: false
+    t.integer  "university_id"
     t.string   "student_enrollment_range"
     t.string   "faculty_staff_range"
-    t.integer  "university_id"
     t.string   "gender"
     t.boolean  "international_students"
     t.string   "selection_criteria"
@@ -56,14 +58,19 @@ ActiveRecord::Schema.define(version: 20141004174340) do
     t.boolean  "distance_or_online_course"
     t.string   "academic_calender_system"
     t.string   "religious_affiliation"
-    t.string   "admission_office_address"
-    t.hstore   "fees_info",                    default: {"pg_local"=>"Not Reported", "ug_local"=>"Not Reported", "pg_international"=>"Not Reported", "ug_international"=>"Not Reported"}
-    t.hstore   "social_links",                 default: {"flickr"=>"NA", "itunes"=>"NA", "twitter"=>"NA", "youtube"=>"NA", "facebook"=>"NA", "linkedin"=>"NA", "wikipedia"=>"NA", "open_courseware"=>"NA"}
-    t.text     "structure_info"
-    t.hstore   "accreditation__info",          default: {"institutional_recognition"=>"NA", "year_of_first_accreditation"=>"NA"}
-    t.text     "affiliation_info"
-    t.datetime "created_at",                                                                                                                                                                                null: false
-    t.datetime "updated_at",                                                                                                                                                                                null: false
+    t.json     "fees_info"
+    t.integer  "all_courses_info",                                                                                                                                                                                               array: true
+    t.integer  "art_humanities_courses_info",                                                                                                                                                                                    array: true
+    t.integer  "business_social_science_courses_info",                                                                                                                                                                           array: true
+    t.integer  "medicine_health_courses_info",                                                                                                                                                                                   array: true
+    t.integer  "engineering_courses_info",                                                                                                                                                                                       array: true
+    t.integer  "science_tech_courses_info",                                                                                                                                                                                      array: true
+    t.string   "structure_info",                                                                                                                                                                                                 array: true
+    t.string   "affiliations",                                                                                                                                                                                                   array: true
+    t.json     "accreditation__info",                  default: {"year_of_first_accreditation"=>"NA", "institutional_recognition"=>"NA"}
+    t.hstore   "social_links",                         default: {"flickr"=>"NA", "itunes"=>"NA", "twitter"=>"NA", "youtube"=>"NA", "facebook"=>"NA", "linkedin"=>"NA", "wikipedia"=>"NA", "open_courseware"=>"NA"}
+    t.datetime "created_at",                                                                                                                                                                                        null: false
+    t.datetime "updated_at",                                                                                                                                                                                        null: false
   end
 
   create_table "users", force: true do |t|
