@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "marka": "0.3.1" 
+    "marka": "0.3.1",
+    "sweetalert": "0.1.1"
   }
 }
