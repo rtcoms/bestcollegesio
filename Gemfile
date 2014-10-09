@@ -114,6 +114,13 @@ group :development, :test do
   gem 'tracer_bullet'
   gem 'xray-rails'
   gem 'rails-footnotes', '>= 4.0.0', '<5'
+  gem 'traceroute'
+  gem 'rack-mini-profiler'
+  gem 'brakeman'
+  gem 'rails_best_practices'
+  gem 'sandi_meter'
+  gem 'rubocop', require: false
+  gem "rubycritic", :require => false
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
