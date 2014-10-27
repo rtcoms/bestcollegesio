@@ -83,7 +83,6 @@ gem 'pghero'
 gem "lograge"
 gem 'logstasher'
 gem 'ahoy_matey'
-gem 'rubocop', require: false
 gem 'paper_trail'
 gem 'party_foul'
 
