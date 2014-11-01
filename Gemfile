@@ -82,7 +82,7 @@ gem 'peek'
 gem 'pghero'
 gem "lograge"
 gem 'logstasher'
-gem 'ahoy_matey'
+# gem 'ahoy_matey'
 gem 'paper_trail'
 gem 'party_foul'
 
@@ -110,7 +110,7 @@ gem 'unicorn'
 group :development, :test do
   gem 'jazz_hands'
   gem 'bullet'
-  gem 'tracer_bullet'
+  # gem 'tracer_bullet'
   gem 'xray-rails'
   gem 'rails-footnotes', '>= 4.0.0', '<5'
   gem 'traceroute'
