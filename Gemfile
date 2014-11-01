@@ -115,7 +115,7 @@ group :development, :test do
   gem 'rails-footnotes', '>= 4.0.0', '<5'
   gem 'traceroute'
   gem 'rack-mini-profiler'
-  gem 'brakeman'
+  # gem 'brakeman'
   gem 'rails_best_practices'
   gem 'sandi_meter'
   gem 'rubocop', require: false
